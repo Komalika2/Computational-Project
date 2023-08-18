@@ -1,0 +1,128 @@
+﻿MM209
+Jagruti Lahamge                       Komalika Shirud                               Sakshi Agarwal
+20110060                                    20110058                                            20D110022
+PROBLEM
+Write a program which will give the CO/CO2 composition and total pressure to achieve desired carbon concentration at the surface of the steel. Please note that the steel should not get oxidized.
+OBJECTIVE
+ C’s activity is initially zero as we flush the CO and CO2 mixture on a pure steel surface. ΔG -> -∞, and hence C starts spontaneously depositing on the surface. We can get the desired concentration of C deposited by adjusting total Pressure and CO/CO2 composition in the gas that is being flushed.
+When ac on the surface and in the gas will be equal, carburization will stop. Thermodynamically, soot will be formed till activity becomes 1. Still, due to kinetic reasons such as nucleation and surface energy, soot can be created for activity greater than one as well.
+ In the process, O2 is also formed, and we need to make sure that it does not oxidize Fe to FeO.
+APPROACH 
+First, we solve the following equilibrium reaction:
+                                                               C + CO2 = 2CO
+ Keq = (PCO )2/((PCO2 )*(ac ));            where ac is activity of C in gaseous phase
+ Keq = e-ΔG°/RT
+ ΔG° = 2ΔG°CO - ΔG°CO2
+ PCO + PCO2 = PTotal
+
+
+We find ac for a range of values of PTotal and  PCO/PCO2 and calculate the mole fraction of C on a Steel surface using the following equation:
+                                                  ac = k . Xc .(1+2Xc )/(1-Xc -12Xc2 )
+                                                 log10k = (2000/T) - 0.8 
+We solve the above equation in an iterative manner to find the value of Xc from k and ac  From Xc , we calculate Wt% of C using the following equation:
+                                       
+                         Wt% C = Xc . 100 . MWFe / MWc where MW = Molecular weight 
+
+
+Note: that this equation can only be used for dilute solutions. 
+
+
+Now we check the values of Wt % C, which satisfy our requirement and corresponding PCO/PCO2 values.
+
+
+ To check FeO’s oxidation, we first find partial pressure of O2 from the following equilibrium reaction.
+                                            CO + 0.5O2= CO2
+
+
+Keq = (PCO2 )/((PCO )2 * (PO2 )0.5 )
+Keq = e-ΔG°/RT
+ ΔG° = ΔG°CO2 - ΔG°CO
+
+
+ We check whether the O2 composition can oxidize Fe.
+                                           Fe + 0.5O2 = FeO ← ΔG°f 
+Keq = (aFeO )/((aFe ) * (PO2 )0.5 )
+
+
+ We consider Fe and FeO to be pure and hence their activities to be equal to 1
+
+
+ ΔG = ΔG°f + RT ln (1/(PO2 )0.5 )
+
+
+ If ΔG<0, then oxidation would occur, and hence we would reject the value of CO/CO2 composition and PTotal
+ If ΔG > 0, we accept the value of CO/CO2 composition and PTotal
+
+
+
+
+RESULTS 
+We ran the code for different values of Total pressure at a temperature of 973 K and desired Wt% of C between 0.2 and 0.4. We have plotted the graph for PCO/PCO2 ranging from 1 to 6 
+
+
+1st graph: Activity of C v/s PCO/PCO2
+2nd graph: Wt% of C v/s  PCO/PCO2
+3rd graph: ΔG formation of FeO v/s  PCO/PCO2
+
+
+Following are some of the results that we obtained:
+ 
+1.  For Total pressure of 0.1 pascals
+     The lower limit of desired Wt% of Carbon 0.2 
+     The upper limit of desired Wt% of Carbon 0.4
+     Allowed values of CO/CO2 composition ratio are from 2.326 to 3.959
+  
+
+
+
+2.  For Total pressure of 0.2 pascals
+     The lower limit of desired Wt% of Carbon 0.2 
+     The upper limit of desired Wt% of Carbon 0.4
+     Allowed values of CO/CO2 composition ratio are from 1.612 to 2.224  
+
+
+
+
+3.  For Total pressure of 0.3 pascals
+     The lower limit of desired Wt% of Carbon 0.2 
+     The upper limit of desired Wt% of Carbon 0.4
+      Allowed values of CO/CO2 composition ratio are from1.612 to 1.612
+  
+
+
+
+
+
+4.  For Total pressure of 0.4 pascals
+     The lower limit of desired Wt% of Carbon 0.2 
+     The upper limit of desired Wt% of Carbon 0.4
+     No suitable  PCO/PCO2 values are possible to deposit desired Wt% of C.
+  
+
+5.  For Total pressure of 0.5 pascals
+     The lower limit of desired Wt% of Carbon 0.2 
+     The upper limit of desired Wt% of Carbon 0.4
+     No suitable  PCO/PCO2 values are possible to deposit desired Wt% of C
+.
+  
+
+
+
+Contribution by Each Member:
+
+
+ Jagruti Lahamge(200110060) -
+ Contributed to Coding the framed solution using Python 
+ Contributed to documenting the solved problem 
+ Generated plots and interpreted data for different test cases in python 
+
+
+ Sakshi Agarwal(20D110022) -
+ Contributed to Coding the framed solution using Python 
+ Contributed to documenting the solved problem
+ Collected the necessary data for solving the problem 
+ 
+ Komalika Shirud(200110058) -
+ Contributed to Coding the framed solution using Python
+ Contributed to documenting the solved problem 
+ Prepared test cases for different variables in the problem and created Readme file
